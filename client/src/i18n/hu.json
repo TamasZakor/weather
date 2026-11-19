@@ -1,0 +1,51 @@
+{
+  "app": {
+    "title": "Időjárási Kimutatások (1901 – 2023)",
+    "description": "Városok vagy teljes régiók aggregált meteorológiai adatainak lekérdezése és statisztikai elemzése."
+  },
+  "fields": {
+    "city": "Város",
+    "region": "Régió",
+    "startDate": "Kezdő dátum",
+    "endDate": "Záró dátum"
+  },
+  "actions": {
+    "cityView": "Város alapú kimutatás",
+    "regionView": "Régió alapú kimutatás",
+    "query": "Lekérdezés",
+    "loading": "Betöltés..."
+  },
+  "units": {
+    "metricTitle": "SI",
+    "metricSub": "(°C, mm)",
+    "imperialTitle": "Angolszász",
+    "imperialSub": "(°F, in)"
+  },
+  "errors": {
+    "requiredDates": "Kérjük, add meg a kezdő és záró dátumot!",
+    "invalidDateRange": "A kezdő dátum nem lehet későbbi a záró dátumnál!",
+    "metadataFailed": "Nem sikerült betölteni a metaadatokat"
+  },
+  "table": {
+    "date": "Dátum",
+    "minTemp": "Min. hőm. (°C)",
+    "maxTemp": "Max. hőm. (°C)",
+    "avgTemp": "Átlag hőm. (°C)",
+    "precipitation": "Csapadék (mm)",
+    "median": "Medián",
+    "mode": "Módusz",
+    "noData": "Nincs megjeleníthető adat a kiválasztott időszakra.",
+    "noDataHint": "Válassz ki egy időszakot és kattints a lekérdezésre!",
+    "displayed": "Megjelenítve:",
+    "scrollHint": "Görgess lejjebb további napok betöltéséhez..."
+  },
+  "calendar": {
+    "select": "Kiválasztás",
+    "placeholder": "ÉÉÉÉ-HH-NN",
+    "days": ["H", "K", "Sze", "Cs", "P", "Szo", "V"],
+    "months": [
+      "Január", "Február", "Március", "Április", "Május", "Június",
+      "Július", "Augusztus", "Szeptember", "Október", "November", "December"
+    ]
+  }
+}

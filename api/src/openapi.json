@@ -1,0 +1,183 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Adiumsoft Weather Service API",
+    "description": "Meteorológiai adatok lekérdezése város és régió szinten (1901–2023).",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "/",
+      "description": "Jelenlegi hoszt"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "API státusz és leírás",
+        "operationId": "getApiRoot",
+        "responses": {
+          "200": {
+            "description": "API alapadatok és végpont-leírások"
+          }
+        }
+      }
+    },
+    "/api/meta": {
+      "get": {
+        "summary": "Városok és régiók metaadatai",
+        "description": "Visszaadja az elérhető városok (ID, név, régió) és támogatott régiók listáját.",
+        "operationId": "getMetadata",
+        "responses": {
+          "200": {
+            "description": "Metaadatok listája",
+            "content": {
+              "application/json": {
+                "example": {
+                  "cities": [
+                    { "id": 1, "name": "Budapest", "region": "Közép-Magyarország" },
+                    { "id": 2, "name": "Debrecen", "region": "Észak és Alföld" }
+                  ],
+                  "regions": [
+                    "Dunántúl",
+                    "Közép-Magyarország",
+                    "Észak és Alföld"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/weather/city": {
+      "get": {
+        "summary": "Város napi időjárási adatai",
+        "description": "Egyedi város napi időjárási adatai (minimum, maximum, átlag hőmérséklet, csapadék).",
+        "operationId": "getCityWeather",
+        "parameters": [
+          {
+            "name": "cityId",
+            "in": "query",
+            "required": true,
+            "description": "A város azonosítója (pl. 1 = Budapest)",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "required": true,
+            "description": "Kezdő dátum (YYYY-MM-DD)",
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "1901-01-01"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": true,
+            "description": "Záró dátum (YYYY-MM-DD)",
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "1901-01-07"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Napi rekordok tömbje",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "date": "1901-01-01",
+                    "minTemp": -6.5,
+                    "maxTemp": -1.2,
+                    "avgTemp": -3.85,
+                    "precipitation": 0.0
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Érvénytelen paraméter hiba"
+          }
+        }
+      }
+    },
+    "/api/weather/region": {
+      "get": {
+        "summary": "Régió aggregált napi időjárási adatai",
+        "description": "Adott régióba tartozó városok adatainak napi átlagai.",
+        "operationId": "getRegionWeather",
+        "parameters": [
+          {
+            "name": "region",
+            "in": "query",
+            "required": true,
+            "description": "Régió neve",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Dunántúl",
+                "Közép-Magyarország",
+                "Észak és Alföld"
+              ],
+              "example": "Dunántúl"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "required": true,
+            "description": "Kezdő dátum (YYYY-MM-DD)",
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "1901-01-01"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": true,
+            "description": "Záró dátum (YYYY-MM-DD)",
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "1901-01-07"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Aggregált napi rekordok tömbje",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "date": "1901-01-01",
+                    "minTemp": -7.1,
+                    "maxTemp": -2.0,
+                    "avgTemp": -4.55,
+                    "precipitation": 1.2
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Érvénytelen paraméter hiba"
+          }
+        }
+      }
+    }
+  }
+}

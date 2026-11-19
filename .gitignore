@@ -1,0 +1,22 @@
+vendor/
+node_modules/
+
+.php-cs-fixer.cache
+.phpunit.cache
+mysql_data/
+migrations/*.csv
+
+.env
+.nvim.lua
+.prettierrc.extension.yml
+.idea
+.phpactor.json
+.vscode/
+
+# Helyi és segédfájlok
+.ignore
+
+# Operációs rendszer fájlok
+.DS_Store
+Thumbs.db
+desktop.ini

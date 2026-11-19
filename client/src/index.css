@@ -1,0 +1,7 @@
+/*
+ * Tailwind CSS v4 belépési pont.
+ * A v4 szintaxis szerint az `@import "tailwindcss";` direktíva importálja a teljes rendszert,
+ * és a build folyamatot a vite.config.ts-ben lévő @tailwindcss/vite plugin vezérli.
+ * (Nincs szükség v3 stílusú @tailwind base/components/utilities direktívákra, sem tailwind.config.js-re.)
+ */
+@import "tailwindcss";
