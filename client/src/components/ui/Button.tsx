@@ -23,10 +23,12 @@ export function Button({
     return (
       <button
         type="button"
-        className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 cursor-pointer ${
+        role="tab"
+        aria-selected={isActive}
+        className={`px-4 py-2 text-sm font-bold rounded-xl transition-all duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-sky-600 focus-visible:outline-hidden ${
           isActive
-            ? "bg-white text-sky-700 shadow-sm border border-sky-100"
-            : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/50"
+            ? "bg-white text-sky-800 shadow-sm border border-sky-200"
+            : "text-slate-700 hover:text-slate-900 hover:bg-slate-200/60"
         } ${className}`}
         {...props}
       >
@@ -39,7 +41,8 @@ export function Button({
     <button
       type="button"
       disabled={isLoading || disabled}
-      className={`w-full py-2.5 px-5 font-semibold text-sm text-white bg-linear-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 active:from-sky-700 active:to-blue-800 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl transition-all duration-200 shadow-md shadow-sky-500/20 hover:shadow-lg hover:shadow-sky-500/30 flex items-center justify-center gap-2 cursor-pointer ${className}`}
+      aria-busy={isLoading}
+      className={`w-full py-2.5 px-5 font-bold text-sm text-white bg-linear-to-r from-sky-600 to-blue-700 hover:from-sky-700 hover:to-blue-800 active:from-sky-800 active:to-blue-900 disabled:opacity-50 disabled:cursor-not-allowed rounded-2xl transition-all duration-200 shadow-md shadow-sky-600/25 hover:shadow-lg hover:shadow-sky-600/35 focus-visible:ring-3 focus-visible:ring-sky-600 focus-visible:outline-hidden flex items-center justify-center gap-2 cursor-pointer ${className}`}
       {...props}
     >
       {isLoading && (

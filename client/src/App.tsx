@@ -111,7 +111,7 @@ export function App() {
             {/* Nézetváltó és Mértékegység Kapcsolók */}
             <div className="flex flex-wrap sm:flex-nowrap items-center gap-3">
               {/* Nézetváltó Tab gombok */}
-              <div className="flex gap-1.5 p-1.5 bg-slate-100/80 rounded-2xl border border-slate-200/60 w-fit">
+              <div role="tablist" aria-label="Nézetválasztó" className="flex gap-1.5 p-1.5 bg-slate-200/80 rounded-2xl border border-slate-300 w-fit">
                 <Button
                   variant="tab"
                   isActive={viewMode === "city"}
@@ -136,31 +136,33 @@ export function App() {
                 </Button>
               </div>
 
-              {/* Mértékegység Váltó Kapcsoló (SI / Angolszász) 2 soros elegáns elrendezéssel */}
-              <div className="flex gap-1.5 p-1.5 bg-sky-100/60 rounded-2xl border border-sky-200/60 w-fit">
+              {/* Mértékegység Váltó Kapcsoló (SI / Angolszász) éles kontraszttal és ARIA-val */}
+              <div role="group" aria-label="Mértékegység rendszer választó" className="flex gap-1.5 p-1.5 bg-sky-200/70 rounded-2xl border border-sky-300 w-fit">
                 <button
                   type="button"
+                  aria-pressed={unitSystem === "metric"}
                   onClick={() => setUnitSystem("metric")}
-                  className={`px-3.5 py-1.5 text-center rounded-xl transition-all cursor-pointer flex flex-col items-center justify-center ${
+                  className={`px-3.5 py-1.5 text-center rounded-xl transition-all cursor-pointer flex flex-col items-center justify-center focus-visible:ring-2 focus-visible:ring-sky-700 focus-visible:outline-hidden ${
                     unitSystem === "metric"
-                      ? "bg-white text-sky-700 shadow-xs border border-sky-200/70"
-                      : "text-slate-600 hover:text-slate-900"
+                      ? "bg-white text-sky-900 shadow-sm border border-sky-300 font-extrabold"
+                      : "text-slate-800 hover:text-slate-950 font-bold"
                   }`}
                 >
                   <span className="text-xs font-bold leading-tight">{i18n.units.metricTitle}</span>
-                  <span className="text-[10px] font-semibold opacity-75 leading-tight whitespace-nowrap">{i18n.units.metricSub}</span>
+                  <span className="text-[11px] font-bold opacity-90 leading-tight whitespace-nowrap">{i18n.units.metricSub}</span>
                 </button>
                 <button
                   type="button"
+                  aria-pressed={unitSystem === "imperial"}
                   onClick={() => setUnitSystem("imperial")}
-                  className={`px-3.5 py-1.5 text-center rounded-xl transition-all cursor-pointer flex flex-col items-center justify-center ${
+                  className={`px-3.5 py-1.5 text-center rounded-xl transition-all cursor-pointer flex flex-col items-center justify-center focus-visible:ring-2 focus-visible:ring-sky-700 focus-visible:outline-hidden ${
                     unitSystem === "imperial"
-                      ? "bg-white text-sky-700 shadow-xs border border-sky-200/70"
-                      : "text-slate-600 hover:text-slate-900"
+                      ? "bg-white text-sky-900 shadow-sm border border-sky-300 font-extrabold"
+                      : "text-slate-800 hover:text-slate-950 font-bold"
                   }`}
                 >
                   <span className="text-xs font-bold leading-tight">{i18n.units.imperialTitle}</span>
-                  <span className="text-[10px] font-semibold opacity-75 leading-tight whitespace-nowrap">{i18n.units.imperialSub}</span>
+                  <span className="text-[11px] font-bold opacity-90 leading-tight whitespace-nowrap">{i18n.units.imperialSub}</span>
                 </button>
               </div>
             </div>

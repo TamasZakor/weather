@@ -93,41 +93,41 @@ export function WeatherTable({ records, unitSystem = "metric" }: WeatherTablePro
         onScroll={handleScroll}
         className="overflow-x-auto max-h-140 overflow-y-auto scroll-smooth"
       >
-        <table className="w-full text-left border-collapse text-sm">
-          {/* Sticky (ragadós) fejléc */}
-          <thead className="sticky top-0 z-10 bg-linear-to-r from-sky-50 to-blue-50 text-sky-950 font-bold shadow-xs">
-            <tr className="border-b border-sky-100">
-              <th className="py-3.5 px-5 bg-sky-50/95 backdrop-blur-xs">{i18n.table.date}</th>
-              <th className="py-3.5 px-5 text-right bg-sky-50/95 backdrop-blur-xs">
+        <table className="w-full text-left border-collapse text-sm" aria-label="Időjárási adatok táblázata">
+          {/* Sticky (ragadós) fejléc magas kontraszttal */}
+          <thead className="sticky top-0 z-10 bg-linear-to-r from-sky-100 to-blue-100 text-slate-950 font-bold shadow-xs">
+            <tr className="border-b border-sky-200">
+              <th scope="col" className="py-3.5 px-5 bg-sky-100/98 backdrop-blur-xs font-extrabold text-slate-900">{i18n.table.date}</th>
+              <th scope="col" className="py-3.5 px-5 text-right bg-sky-100/98 backdrop-blur-xs font-extrabold text-slate-900">
                 Min. ({tempUnitLabel})
               </th>
-              <th className="py-3.5 px-5 text-right bg-sky-50/95 backdrop-blur-xs">
+              <th scope="col" className="py-3.5 px-5 text-right bg-sky-100/98 backdrop-blur-xs font-extrabold text-slate-900">
                 Max. ({tempUnitLabel})
               </th>
-              <th className="py-3.5 px-5 text-right bg-sky-50/95 backdrop-blur-xs">
+              <th scope="col" className="py-3.5 px-5 text-right bg-sky-100/98 backdrop-blur-xs font-extrabold text-slate-900">
                 Átlag ({tempUnitLabel})
               </th>
-              <th className="py-3.5 px-5 text-right bg-sky-50/95 backdrop-blur-xs">
+              <th scope="col" className="py-3.5 px-5 text-right bg-sky-100/98 backdrop-blur-xs font-extrabold text-slate-900">
                 Csapadék ({precipUnitLabel})
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100 text-slate-700">
+          <tbody className="divide-y divide-slate-100 text-slate-800">
             {visibleRecords.map((row) => (
-              <tr key={row.date} className="hover:bg-sky-50/40 transition-colors">
-                <td className="py-3 px-5 font-mono font-medium text-slate-900">{row.date}</td>
-                <td className="py-3 px-5 text-right font-mono text-cyan-800">
+              <tr key={row.date} className="hover:bg-sky-50/70 transition-colors">
+                <td className="py-3 px-5 font-mono font-bold text-slate-900">{row.date}</td>
+                <td className="py-3 px-5 text-right font-mono font-semibold text-cyan-900">
                   {formatTemperature(row.minTemp, unitSystem)}
                 </td>
-                <td className="py-3 px-5 text-right font-mono text-amber-700">
+                <td className="py-3 px-5 text-right font-mono font-semibold text-amber-900">
                   {formatTemperature(row.maxTemp, unitSystem)}
                 </td>
-                <td className="py-3 px-5 text-right font-mono font-semibold text-blue-700">
-                  <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-lg border border-blue-100/60">
+                <td className="py-3 px-5 text-right font-mono font-bold text-blue-900">
+                  <span className="bg-blue-100/80 text-blue-900 px-2.5 py-0.5 rounded-lg border border-blue-200 font-extrabold">
                     {formatTemperature(row.avgTemp, unitSystem)}
                   </span>
                 </td>
-                <td className="py-3 px-5 text-right font-mono text-sky-700 font-medium">
+                <td className="py-3 px-5 text-right font-mono text-sky-900 font-bold">
                   {formatPrecipitation(row.precipitation, unitSystem)}
                 </td>
               </tr>
@@ -135,42 +135,42 @@ export function WeatherTable({ records, unitSystem = "metric" }: WeatherTablePro
           </tbody>
           {/* Sticky (ragadós) lábléc az összesítésekkel */}
           {stats && (
-            <tfoot className="sticky bottom-0 z-10 bg-slate-50/95 backdrop-blur-xs font-medium text-slate-800 border-t-2 border-sky-100 shadow-sm">
+            <tfoot className="sticky bottom-0 z-10 bg-slate-100/98 backdrop-blur-xs font-semibold text-slate-900 border-t-2 border-sky-200 shadow-sm">
               {/* Medián sor */}
-              <tr className="border-b border-slate-200/70">
-                <td className="py-3 px-5 font-bold text-slate-900 flex items-center gap-2">
-                  <span className="w-1.5 h-4 bg-sky-500 rounded-full"></span>
+              <tr className="border-b border-slate-200">
+                <th scope="row" className="py-3 px-5 font-extrabold text-slate-950 flex items-center gap-2">
+                  <span className="w-2 h-4 bg-sky-600 rounded-full" aria-hidden="true"></span>
                   {i18n.table.median}
-                </td>
-                <td className="py-3 px-5 text-right font-mono text-cyan-900 font-semibold">
+                </th>
+                <td className="py-3 px-5 text-right font-mono text-cyan-950 font-bold">
                   {formatTemperature(stats.minTemp.median, unitSystem)}
                 </td>
-                <td className="py-3 px-5 text-right font-mono text-amber-900 font-semibold">
+                <td className="py-3 px-5 text-right font-mono text-amber-950 font-bold">
                   {formatTemperature(stats.maxTemp.median, unitSystem)}
                 </td>
-                <td className="py-3 px-5 text-right font-mono text-blue-800 font-bold">
+                <td className="py-3 px-5 text-right font-mono text-blue-950 font-extrabold">
                   {formatTemperature(stats.avgTemp.median, unitSystem)}
                 </td>
-                <td className="py-3 px-5 text-right font-mono text-sky-800 font-semibold">
+                <td className="py-3 px-5 text-right font-mono text-sky-950 font-bold">
                   {formatPrecipitation(stats.precipitation.median, unitSystem)}
                 </td>
               </tr>
               {/* Módusz sor */}
               <tr>
-                <td className="py-3 px-5 font-bold text-slate-900 flex items-center gap-2">
-                  <span className="w-1.5 h-4 bg-blue-600 rounded-full"></span>
+                <th scope="row" className="py-3 px-5 font-extrabold text-slate-950 flex items-center gap-2">
+                  <span className="w-2 h-4 bg-blue-700 rounded-full" aria-hidden="true"></span>
                   {i18n.table.mode}
-                </td>
-                <td className="py-3 px-5 text-right font-mono text-cyan-900 font-semibold">
+                </th>
+                <td className="py-3 px-5 text-right font-mono text-cyan-950 font-bold">
                   {formatTemperature(stats.minTemp.mode, unitSystem)}
                 </td>
-                <td className="py-3 px-5 text-right font-mono text-amber-900 font-semibold">
+                <td className="py-3 px-5 text-right font-mono text-amber-950 font-bold">
                   {formatTemperature(stats.maxTemp.mode, unitSystem)}
                 </td>
-                <td className="py-3 px-5 text-right font-mono text-blue-800 font-bold">
+                <td className="py-3 px-5 text-right font-mono text-blue-950 font-extrabold">
                   {formatTemperature(stats.avgTemp.mode, unitSystem)}
                 </td>
-                <td className="py-3 px-5 text-right font-mono text-sky-800 font-semibold">
+                <td className="py-3 px-5 text-right font-mono text-sky-950 font-bold">
                   {formatPrecipitation(stats.precipitation.mode, unitSystem)}
                 </td>
               </tr>

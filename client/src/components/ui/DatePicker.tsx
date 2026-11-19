@@ -24,10 +24,12 @@ export function DatePicker({
   onChange,
   min = "1901-01-01",
   max = "2023-12-31",
+  id,
   disabled = false,
 }: DatePickerProps) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const datePickerId = id || `datepicker-${label.toLowerCase().replace(/\s+/g, "-")}`;
 
   // Értelmezzük az aktuális dátumot
   const parsedDate = value ? new Date(value) : new Date(1901, 0, 1);
@@ -105,23 +107,31 @@ export function DatePicker({
 
   return (
     <div className="w-full relative" ref={containerRef}>
-      <label className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+      <label
+        id={`${datePickerId}-label`}
+        htmlFor={datePickerId}
+        className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5"
+      >
         {label}
       </label>
 
-      {/* Kattintható beviteli mező */}
+      {/* Kattintható beviteli mező ARIA attribútumokkal */}
       <button
+        id={datePickerId}
         type="button"
         disabled={disabled}
+        aria-haspopup="dialog"
+        aria-expanded={isOpen}
+        aria-labelledby={`${datePickerId}-label ${datePickerId}`}
         onClick={() => setIsOpen((prev) => !prev)}
-        className={`w-full flex items-center justify-between px-4 py-2.5 bg-white/95 hover:bg-white border rounded-2xl text-slate-800 text-sm font-semibold tracking-wide transition-all shadow-xs cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${
+        className={`w-full flex items-center justify-between px-4 py-2.5 bg-white/95 hover:bg-white border rounded-2xl text-slate-900 text-sm font-semibold tracking-wide transition-all shadow-xs cursor-pointer focus-visible:ring-3 focus-visible:ring-sky-600 focus-visible:outline-hidden disabled:opacity-50 disabled:cursor-not-allowed ${
           isOpen
-            ? "border-sky-500 ring-4 ring-sky-500/15"
-            : "border-slate-200/90 hover:border-sky-300"
+            ? "border-sky-600 ring-4 ring-sky-500/20"
+            : "border-slate-300 hover:border-sky-400"
         }`}
       >
         <div className="flex items-center gap-2.5">
-          <svg className="w-4 h-4 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 text-sky-600" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -129,33 +139,40 @@ export function DatePicker({
               d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
             />
           </svg>
-          <span className="font-mono text-slate-900">{value || i18n.calendar.placeholder}</span>
+          <span className="font-mono text-slate-900 font-bold">{value || i18n.calendar.placeholder}</span>
         </div>
-        <span className="text-xs text-sky-600 font-medium">{i18n.calendar.select}</span>
+        <span className="text-xs text-sky-700 font-semibold">{i18n.calendar.select}</span>
       </button>
 
-      {/* Egyedi Lebegő Naptár Doboz */}
+      {/* Egyedi Lebegő Naptár Doboz – Mobilbarát max-szélességgel és reszponzív elhelyezéssel */}
       {isOpen && (
-        <div className="absolute z-50 left-0 mt-2 w-72 sm:w-80 p-4 bg-white/95 backdrop-blur-xl border border-sky-100 rounded-3xl shadow-2xl shadow-sky-950/15 animate-in fade-in zoom-in-95 duration-150">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={label}
+          className="absolute z-50 left-0 sm:left-auto right-auto sm:right-0 mt-2 w-72 sm:w-80 max-w-[calc(100vw-2rem)] p-4 bg-white/98 backdrop-blur-xl border border-sky-200 rounded-3xl shadow-2xl shadow-sky-950/20 animate-in fade-in zoom-in-95 duration-150"
+        >
           {/* Naptár fejléc & Év/Hónap léptető */}
           <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
             <button
               type="button"
+              aria-label="Előző hónap"
               onClick={handlePrevMonth}
-              className="p-1.5 rounded-xl hover:bg-sky-50 text-slate-600 hover:text-sky-700 transition-colors cursor-pointer"
+              className="p-2 rounded-xl hover:bg-sky-100/70 text-slate-700 hover:text-sky-800 transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-sky-600 focus-visible:outline-hidden"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" />
               </svg>
             </button>
 
             <div className="flex items-center gap-1.5">
-              <span className="text-sm font-bold text-slate-800">{monthNames[viewMonth]}</span>
+              <span className="text-sm font-extrabold text-slate-900">{monthNames[viewMonth]}</span>
               {/* Év választó */}
               <select
                 value={viewYear}
+                aria-label="Év kiválasztása"
                 onChange={(e) => setViewYear(Number(e.target.value))}
-                className="text-sm font-bold text-sky-700 bg-sky-50/80 px-2 py-0.5 rounded-lg border-none focus:outline-none cursor-pointer"
+                className="text-sm font-bold text-sky-800 bg-sky-100/70 px-2.5 py-1 rounded-lg border border-sky-200 focus-visible:ring-2 focus-visible:ring-sky-600 focus:outline-hidden cursor-pointer"
               >
                 {Array.from({ length: maxYear - minYear + 1 }, (_, i) => minYear + i).map((y) => (
                   <option key={y} value={y}>
@@ -167,29 +184,30 @@ export function DatePicker({
 
             <button
               type="button"
+              aria-label="Következő hónap"
               onClick={handleNextMonth}
-              className="p-1.5 rounded-xl hover:bg-sky-50 text-slate-600 hover:text-sky-700 transition-colors cursor-pointer"
+              className="p-2 rounded-xl hover:bg-sky-100/70 text-slate-700 hover:text-sky-800 transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-sky-600 focus-visible:outline-hidden"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
               </svg>
             </button>
           </div>
 
-          {/* Hét napjai fejléc */}
-          <div className="grid grid-cols-7 gap-1 text-center mb-2">
+          {/* Hét napjai fejléc magas kontraszttal */}
+          <div className="grid grid-cols-7 gap-1 text-center mb-2" aria-hidden="true">
             {dayNames.map((day) => (
-              <span key={day} className="text-xs font-bold text-slate-400">
+              <span key={day} className="text-xs font-bold text-slate-600">
                 {day}
               </span>
             ))}
           </div>
 
           {/* Napok négyzethálója */}
-          <div className="grid grid-cols-7 gap-1 text-center">
+          <div className="grid grid-cols-7 gap-1 text-center" role="grid">
             {/* Üres napok a hónap elején */}
             {Array.from({ length: firstDayIndex }).map((_, i) => (
-              <div key={`empty-${i}`} className="h-8" />
+              <div key={`empty-${i}`} className="h-8" aria-hidden="true" />
             ))}
 
             {/* A hónap napjai */}
@@ -205,13 +223,15 @@ export function DatePicker({
                   key={day}
                   type="button"
                   disabled={isDisabled}
+                  aria-label={`${viewYear}. ${monthNames[viewMonth]} ${day}.`}
+                  aria-pressed={isSelected}
                   onClick={() => handleSelectDay(day)}
-                  className={`h-8 w-8 mx-auto flex items-center justify-center text-xs font-semibold rounded-xl transition-all cursor-pointer ${
+                  className={`h-8 w-8 mx-auto flex items-center justify-center text-xs font-bold rounded-xl transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-sky-600 focus-visible:outline-hidden ${
                     isSelected
-                      ? "bg-linear-to-r from-sky-500 to-blue-600 text-white shadow-md shadow-sky-500/30 scale-105"
+                      ? "bg-linear-to-r from-sky-600 to-blue-700 text-white shadow-md shadow-sky-600/30 scale-105"
                       : isDisabled
                       ? "text-slate-300 cursor-not-allowed"
-                      : "text-slate-700 hover:bg-sky-50 hover:text-sky-700 active:scale-95"
+                      : "text-slate-800 hover:bg-sky-100 hover:text-sky-950 active:scale-95"
                   }`}
                 >
                   {day}
