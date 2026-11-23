@@ -70,7 +70,7 @@ class WeatherAdvancedHttpAndEdgeCasesTest extends TestCase
         $this->assertSame(19040228, $query->startDate);
         $this->assertSame(19040301, $query->endDate);
 
-        // Élő HTTP kérésben is ellenőrizzük, hogy a február 29. szerepel a válaszban
+        // Élő HTTP kérésben is ellenőrzöm, hogy a február 29. szerepel a válaszban
         $res = $this->client->get("/api/weather/city", [
             "cityId" => "1",
             "startDate" => "1904-02-28",

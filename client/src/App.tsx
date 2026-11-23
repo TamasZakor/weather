@@ -42,7 +42,7 @@ export function App() {
         setRegions(meta.regions);
         if (meta.dateRange) {
           setDateRange(meta.dateRange);
-          // Ha szeretnénk a kezdő dátumot dinamikusan a DB legkorábbijához igazítani
+          // Ha a kezdő dátumot dinamikusan a DB legkorábbijához kívánom igazítani
           if (!startDate) {
             setStartDate(meta.dateRange.minDate);
           }

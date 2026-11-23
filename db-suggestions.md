@@ -157,7 +157,7 @@ PARTITION BY RANGE (YEAR(date)) (
 
 ## 7. Összefoglaló Javaslati Script (Refaktorált Séma)
 
-Amennyiben az adatbázis sémáját modernizálni kívánjuk a fentiek alapján:
+Amennyiben az adatbázis sémáját modernizálni kívánom a fentiek alapján:
 
 ```sql
 -- 1. Városok tábla javítása
@@ -210,7 +210,7 @@ A fenti optimalizációk és javítások élesben is megvalósításra kerültek
 
 ## 9. Valós Teljesítmény- és Tárhelymérések (Eredeti vs. Optimalizált)
 
-A javaslatok validálására egzakt méréseket végeztünk a futó MySQL 8.0 környezetben az `information_schema` és az `EXPLAIN ANALYZE` profilozó eszköz segítségével.
+A javaslatok validálására egzakt méréseket végeztem a futó MySQL 8.0 környezetben az `information_schema` és az `EXPLAIN ANALYZE` profilozó eszköz segítségével.
 
 ### 9.1. Tárhely és Memória Lábnyom (Storage & Memory Footprint)
 
@@ -242,7 +242,7 @@ GROUP BY table_schema;
 
 ### 9.2. Lekérdezési Sebesség és Erőforrás-felhasználás (Benchmark)
 
-Az alábbi lekérdezések futási idejét mértük `EXPLAIN ANALYZE` segítségével:
+Az alábbi lekérdezések futási idejét mértem `EXPLAIN ANALYZE` segítségével:
 
 #### 1. Mérés: Egy város 1 éves intervalluma (Budapest, 1901. év – 365 sor)
 

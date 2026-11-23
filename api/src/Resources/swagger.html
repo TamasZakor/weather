@@ -15,7 +15,7 @@
     <script src="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-bundle.js"></script>
     <script>
         window.onload = () => {
-            // Relatív URL meghatározása: ha /api/v1/docs alatt futunk, akkor /api/v1/openapi.json-t kérjük le
+            // Relatív URL meghatározása: ha a /docs alatt fut az alkalmazás, akkor az openapi.json-t kéri le
             const currentPath = window.location.pathname.replace(/\/docs\/?$/, '');
             const specUrl = (currentPath ? currentPath : '') + '/openapi.json';
 
