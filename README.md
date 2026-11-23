@@ -181,9 +181,9 @@ technológiák mélyebb ismeretét.
 
 ---
 
-## Megvalósítás és Mérnöki Döntések (Engineering Decisions & Trade-offs)
+## Megvalósítás és Architektúrális Döntések (Decisions & Trade-offs)
 
-Az alábbiakban összefoglalom a megoldás során hozott architektúrális és tesztelési döntéseimet, indoklásaimat, valamint a megvalósított extra funkciókat:
+Az alábbiakban összefoglalom a megoldás során hozott architektúrális és technológiai döntéseimet, indoklásaimat, valamint a megvalósított extra funkciókat:
 
 ### 1. Backend & Adatbázis Architektúra
 * **Keretrendszer bővítése:** A meglévő vékony keretrendszert a feladat szellemében használtam fel. A `QueryBuilder` osztályt felkészítettem a több táblás `INNER JOIN` és aggregált lekérdezések tiszta, folyékony (fluent) kezelésére.
